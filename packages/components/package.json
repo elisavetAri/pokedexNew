@@ -18,8 +18,10 @@
     "url": "git+https://github.com/elisavetAri/pokedexNew.git"
   },
   "scripts": {
-    "test": "node ./__tests__/components.test.js"
+    "test": "node ./__tests__/components.test.js",
+    "dev": "microbundle watch --jsx React.createElement"
   },
+  "source": "lib/index.js",
   "bugs": {
     "url": "https://github.com/elisavetAri/pokedexNew/issues"
   }
