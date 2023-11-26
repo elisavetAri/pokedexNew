@@ -1,10 +1,15 @@
 "use client"
 import type { Metadata } from 'next'
 import fetchPokemon from '@/lib/fetchPokemon'
-import Link from "next/link"
+import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import { DataGrid, GridEventListener} from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
-import React, { MouseEvent } from 'react'
+import { Container } from '@mui/material';
+import build from 'next/dist/build';
+import { redirect } from 'next/dist/server/api-utils';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 export const metaData: Metadata = {
  title: 'Get all Pokemon'
 }
@@ -25,28 +30,46 @@ const rows = pok.results.map((row) => {
     }
 })
 
-// const handleRowClick = (
-//   params,
-//   event, 
-//   details, 
-// ) => {
-//   console.log(params);
-//  <Link href={params.row.id}>
-//   </Link>
+const paths =  pok.results.map((pokemon) => ({
+  params: { url: pokemon.url, name: pokemon.name },
+}));
 
-//   console.log(params.row.id)
-// };
+
 const handleRowClick: GridEventListener<'rowClick'> = (
-  params, // GridRowParams
-  event, // MuiEvent<React.MouseEvent<HTMLElement>>
-  details, // GridCallbackDetails
+  params, 
+  event, 
+  details, 
 ) => {
-  console.log(`Movie "${params.row.id}" clicked`);
+  // <Link href='/pokemonDetails'></Link>
+
+  console.log(
+    params.row.id)
+  // <Link href='/pokemonDetails'></Link>
+  // console.log(details);
+  // console.log('details', event.target);
+  // params.id
+  // console.log(`Movie "${params.row.id}" clicked`);
 };
 return (
     <>
-    <Box  sx={{ height: 400, width: '100%' }}>
+
+<div style={{
+      backgroundImage: `url("https://c4.wallpaperflare.com/wallpaper/440/152/860/pokemon-backgrounds-for-widescreen-wallpaper-preview.jpg")`,
+      height: "100vh",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
+  }}>
+    <Container>
       <DataGrid
+      sx={{
+        boxShadow: 2,
+        border: 2,
+        backgroundColor:'white',
+        borderColor: 'primary.light',
+        '& .MuiDataGrid-cell:hover': {
+          color: 'primary.warning',
+        },
+      }}
         columns={columns} 
         rows={rows}
         onRowClick={handleRowClick}
@@ -56,7 +79,8 @@ return (
         }}
         pageSizeOptions={[5, 10, 25]}     
          />
-    </Box>
+         </Container>
+       </div>
     </>
     )
 }

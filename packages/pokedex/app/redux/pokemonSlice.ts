@@ -1,23 +1,34 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { RootState } from "./store"
 
-export const fetchPokemon = createAsyncThunk('/pokemon',async (thunkApi) => {
-    const response = await fetch('https://pokeapi.co/api/v2/pokemon')
-    const data = await response.json();
-    return data;
-})
+
 
 const initialState = {
-    entities: []
- } as any
- const pokemonSlice = createSlice(({
-    name: 'pokemon',
+    results: [{
+
+    }]
+  }
+export const pokemonSlice  = createSlice({
+    name: 'counter',
+    // `createSlice` will infer the state type from the `initialState` argument
     initialState,
-    reducers:{}
-,extraReducers:(builder)=>{
-    builder.addCase(fetchPokemon.fulfilled,(state, action)=>{
-state.entities.push(...action.payload)
-    })
-} 
-}
-))
-export default pokemonSlice.reducer
+    reducers: {
+      increment: (state) => {
+        state.results
+      },
+      decrement: (state) => {
+        state.results
+      },
+      // Use the PayloadAction type to declare the contents of `action.payload`
+      incrementByAmount: (state, action: PayloadAction<number>) => {
+        state.results
+      },
+    },
+  })
+  
+  export const { increment, decrement, incrementByAmount } = pokemonSlice.actions
+  
+  // Other code such as selectors can use the imported `RootState` type
+//   export const selectCount = (state: RootState) => state.resul.value
+  
+  export default pokemonSlice.reducer

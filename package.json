@@ -18,7 +18,9 @@
   },
   "devDependencies": {
     "add": "^2.0.6",
+    "cypress": "^13.6.0",
     "lerna": "^8.0.0",
+    "lerna-dockerize": "^1.0.9",
     "microbundle": "^0.15.1"
   }
 }
