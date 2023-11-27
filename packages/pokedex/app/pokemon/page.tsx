@@ -1,21 +1,21 @@
 "use client"
 import type { Metadata } from 'next'
 import fetchPokemon from '@/lib/fetchPokemon'
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import { DataGrid, GridEventListener} from '@mui/x-data-grid';
-import Box from '@mui/material/Box';
-import { Container } from '@mui/material';
-import build from 'next/dist/build';
-import { redirect } from 'next/dist/server/api-utils';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { Container } from '@mui/material';;
+import { useRouter } from 'next/navigation';
+import { useDispatch, useSelector } from "react-redux";
+import { pokemon, pokemonSlice } from '../redux/pokemonSlice';
+import React from 'react';
 export const metaData: Metadata = {
  title: 'Get all Pokemon'
 }
 
-const PokemonPage = async()=>{
+const PokemonPage = async () =>{
+  // const authState = useSelector(pokemon);
+  // const dispatch = useDispatch();
 const pokemonData: Promise<Pokemon> = fetchPokemon();
+const router = useRouter();
 const pok = await pokemonData
 const columns = [
     {  field: 'name', headerName: 'Name', width: 150, flex: 1  },
@@ -30,25 +30,12 @@ const rows = pok.results.map((row) => {
     }
 })
 
-const paths =  pok.results.map((pokemon) => ({
-  params: { url: pokemon.url, name: pokemon.name },
-}));
-
-
 const handleRowClick: GridEventListener<'rowClick'> = (
   params, 
   event, 
   details, 
 ) => {
-  // <Link href='/pokemonDetails'></Link>
-
-  console.log(
-    params.row.id)
-  // <Link href='/pokemonDetails'></Link>
-  // console.log(details);
-  // console.log('details', event.target);
-  // params.id
-  // console.log(`Movie "${params.row.id}" clicked`);
+  router.push('/pokemonDetails')
 };
 return (
     <>
@@ -58,9 +45,11 @@ return (
       height: "100vh",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
-  }}>
+  }}
+  test-id='pokemonPage'>
     <Container>
       <DataGrid
+      test-id="datagrid"
       sx={{
         boxShadow: 2,
         border: 2,

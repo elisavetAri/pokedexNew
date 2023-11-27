@@ -1,5 +1,6 @@
 import CatchingPokemonIcon from '@mui/icons-material/CatchingPokemon';
 import Link from 'next/link';
+import React from 'react';
 
 export default function Home() {
   return (
