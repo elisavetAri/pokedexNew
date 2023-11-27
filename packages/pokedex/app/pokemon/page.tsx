@@ -1,12 +1,10 @@
 "use client"
 import type { Metadata } from 'next'
-import fetchPokemon from '@/lib/fetchPokemon'
 import { DataGrid, GridEventListener} from '@mui/x-data-grid';
 import { Container } from '@mui/material';;
 import { useRouter } from 'next/navigation';
-import { useDispatch, useSelector } from "react-redux";
-import { pokemon, pokemonSlice } from '../redux/pokemonSlice';
 import React from 'react';
+import fetchPokemon from '../../lib/fetchPokemon';
 export const metaData: Metadata = {
  title: 'Get all Pokemon'
 }
@@ -39,7 +37,6 @@ const handleRowClick: GridEventListener<'rowClick'> = (
 };
 return (
     <>
-
 <div style={{
       backgroundImage: `url("https://c4.wallpaperflare.com/wallpaper/440/152/860/pokemon-backgrounds-for-widescreen-wallpaper-preview.jpg")`,
       height: "100vh",
